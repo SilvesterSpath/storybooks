@@ -1,14 +1,21 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 const connectDB = require('./config/db');
 
+// Load config
 dotenv.config({ path: '.env' });
+
+// Connect DB
+connectDB();
 
 const app = express();
 
-app.use(express.json());
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
-connectDB();
+app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
