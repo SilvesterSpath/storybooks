@@ -10,13 +10,16 @@ const connectDB = require('./config/db');
 // Load config
 dotenv.config({ path: '.env' });
 
-// Passport config
-require('./config/passport')(passport);
-
 // Connect DB
 connectDB();
 
 const app = express();
+
+// Initialize passport
+app.use(passport.initialize());
+
+// Passport config
+require('./config/passport')(app, passport);
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
