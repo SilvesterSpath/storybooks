@@ -28,6 +28,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // Handlebars
 app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, 'views'));
+
+console.log('views', app.get('views'));
 
 // Set session middleware
 app.use(

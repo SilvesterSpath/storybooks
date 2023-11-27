@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 // @desc Dashboard
 // @route GET /dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('dashboard');
+  res.render('dashboard', { layout: 'layouts/main' });
 });
 
 module.exports = router;
