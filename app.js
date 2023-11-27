@@ -10,16 +10,17 @@ const connectDB = require('./config/db');
 // Load config
 dotenv.config({ path: './config/.env' });
 
+// Passport config
+require('./config/passport')(passport);
+
 // Connect DB
 connectDB();
 
 const app = express();
 
-// Initialize passport
-app.use(passport.initialize());
-
-// Passport config
-require('./config/passport')(app, passport);
+// Body parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Handlebars
-app.set('view engine', '.hbs');
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 console.log('views', app.get('views'));
@@ -51,6 +52,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
+
+console.log(__dirname);
+console.log(app.get('views'));
+app.disable('view cache');
 
 const PORT = process.env.PORT || 3000;
 

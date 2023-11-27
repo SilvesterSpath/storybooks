@@ -7,6 +7,10 @@ router.get('/', (req, res) => {
   res.render('loginview', { layout: 'layouts/login' });
 });
 
+router.get('/header', (req, res) => {
+  res.render('partials/header', { layout: 'layouts/main' });
+});
+
 // @desc Dashboard
 // @route GET /dashboard
 router.get('/dashboard', (req, res) => {
