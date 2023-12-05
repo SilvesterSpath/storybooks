@@ -26,7 +26,7 @@ module.exports = function (passport) {
             console.log('User created' + newUser);
             done(null, newUser);
           } else {
-            console.log('User found' + user);
+            console.log('User found: ' + user);
             done(null, user);
           }
         } catch (error) {

@@ -3,6 +3,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const hbs = require('hbs');
+const handlebars = require('handlebars');
+const exphbs = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
 const connectDB = require('./config/db');
@@ -30,8 +32,10 @@ if (process.env.NODE_ENV === 'development') {
 // Handlebars
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('partials', path.join(__dirname, 'views/partials'));
 
 console.log('views', app.get('views'));
+console.log('partials', app.get('partials'));
 
 // Set session middleware
 app.use(

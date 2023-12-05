@@ -21,11 +21,12 @@ router.get(
   }
 );
 
-// @desc Logout
+// @desc Logout user
 // @route GET /auth/logout
 router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.logout(() => {
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
