@@ -2,6 +2,8 @@ const express = require('express');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
+const Story = require('../models/Story');
+
 // @desc Login/Landing page
 // @route GET /
 router.get('/', auth.ensureGuest, (req, res) => {
@@ -14,9 +16,14 @@ router.get('/header', (req, res) => {
 
 // @desc Dashboard
 // @route GET /dashboard
-router.get('/dashboard', auth.ensureAuth, (req, res) => {
-  console.log(req.user.lastName);
-  res.render('dashboard', { name: req.user.lastName });
+router.get('/dashboard', auth.ensureAuth, async (req, res) => {
+  try {
+    // we should use .lean() to be able to render it
+    const stories = await Story.find({ user: req.user.id }).lean();
+    res.render('dashboard', { name: req.user.lastName, stories });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 module.exports = router;
