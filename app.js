@@ -3,7 +3,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const hbs = require('hbs');
-const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -32,7 +31,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Handlebars
-app.set('view engine', 'hbs');
+app.engine('.hbs', exphbs.engine({ extname: '.hbs', defaultLayout: 'main' }));
+app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('partials', path.join(__dirname, 'views/partials'));
 

@@ -5,17 +5,18 @@ const router = express.Router();
 // @desc Login/Landing page
 // @route GET /
 router.get('/', auth.ensureGuest, (req, res) => {
-  res.render('loginview', { layout: 'layouts/login' });
+  res.render('loginview', { layout: 'login' });
 });
 
 router.get('/header', (req, res) => {
-  res.render('partials/header', { layout: 'layouts/main' });
+  res.render('partials/header', { layout: 'main' });
 });
 
 // @desc Dashboard
 // @route GET /dashboard
 router.get('/dashboard', auth.ensureAuth, (req, res) => {
-  res.render('dashboard', { layout: 'layouts/main' });
+  console.log(req.user.lastName);
+  res.render('dashboard', { name: req.user.lastName });
 });
 
 module.exports = router;
