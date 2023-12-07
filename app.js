@@ -5,9 +5,11 @@ const morgan = require('morgan');
 const hbs = require('hbs');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const connectDB = require('./config/db');
+const MongoStore = require('connect-mongo');
 
 // Load config
 dotenv.config({ path: './config/.env' });
@@ -43,6 +45,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   })
 );
 
