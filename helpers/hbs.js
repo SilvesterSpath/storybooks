@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 module.exports = {
-  formatData: function (data) {
+  formatDate: function (data, format) {
     return moment(data).format(format);
   },
 };
