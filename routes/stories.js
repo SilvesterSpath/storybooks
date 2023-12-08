@@ -10,14 +10,18 @@ router.get('/add', auth.ensureAuth, async (req, res) => {
   res.render('stories/add');
 });
 
+// Process add form
+// POST /stories
 router.post('/', auth.ensureAuth, async (req, res) => {
   try {
-    const story = new Story({
-      title: req.body.title,
-      content: req.body.content,
+    req.body.user = req.user.id;
+    await Story.create(req.body);
+    /*     const story = new Story({
+      title: req.body.title || 'Untitled',
+      content: req.body.content || 'default content',
       user: req.user.id,
-    });
-    await story.save();
+    }); */
+    /* await story.save(); */
     res.redirect('/dashboard');
   } catch (error) {
     console.error(error);
