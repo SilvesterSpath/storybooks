@@ -48,7 +48,6 @@ router.get('/', auth.ensureAuth, async (req, res) => {
 // Put /stories/edit/:id
 router.get('/edit/:id', auth.ensureAuth, async (req, res) => {
   const story = await Story.findOne({ _id: req.params.id }).lean();
-  console.log(story);
 
   if (!story) {
     return res.render('error/404');
