@@ -14,11 +14,13 @@ router.get('/add', auth.ensureAuth, (req, res) => {
 // GET /stories/:id
 router.get('/:id', auth.ensureAuth, async (req, res) => {
   try {
-    const story = await Story.findOne({ _id: req.params.id }).lean();
+    const story = await Story.findOne({ _id: req.params.id })
+      .populate('user')
+      .lean();
     if (!story) {
       return res.render('error/404');
     }
-    res.render(`stories/${req.params.id}`, { story });
+    res.render('stories/show', { story });
   } catch (error) {
     console.error(error.stack);
     res.render('error/500', { error });
