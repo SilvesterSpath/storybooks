@@ -6,7 +6,7 @@ const Story = require('../models/Story');
 
 // Show add page
 // GET /stories/add
-router.get('/add', auth.ensureAuth, async (req, res) => {
+router.get('/add', auth.ensureAuth, (req, res) => {
   res.render('stories/add');
 });
 
@@ -57,6 +57,27 @@ router.get('/edit/:id', auth.ensureAuth, async (req, res) => {
     res.redirect('/stories');
   } else {
     res.render('stories/edit', { story });
+  }
+});
+
+// Update story
+// PUT /stories/:id
+router.put('/:id', auth.ensureAuth, async (req, res) => {
+  console.log('this', req.params.id);
+  let story = await Story.findOne({ _id: req.params.id }).lean();
+
+  if (!story) {
+    return res.render('error/404');
+  }
+
+  if (story.user.toString() !== req.user.id) {
+    res.redirect('/stories');
+  } else {
+    story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.redirect(`/dashboard`);
   }
 });
 
